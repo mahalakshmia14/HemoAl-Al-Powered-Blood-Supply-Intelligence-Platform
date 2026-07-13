@@ -1,0 +1,530 @@
+# ---------------------------------------------------
+import streamlit as st
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+
+# -------------------------------------------------------
+# PAGE CONFIG
+# -------------------------------------------------------
+
+st.set_page_config(
+    page_title="HemoAI",
+    page_icon="🩸",
+    layout="wide"
+)
+
+# -------------------------------------------------------
+# CUSTOM CSS
+# -------------------------------------------------------
+
+st.markdown("""
+<style>
+
+html, body, [class*="css"]  {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f7fb;
+}
+
+/* MAIN APP */
+
+.main {
+    background-color: #f4f7fb;
+}
+
+/* HERO SECTION */
+
+.hero {
+    background: linear-gradient(
+        135deg,
+        #8B0000,
+        #C0392B,
+        #E74C3C
+    );
+
+    padding: 45px;
+    border-radius: 28px;
+    color: white;
+    margin-bottom: 30px;
+
+    box-shadow: 0px 10px 30px rgba(0,0,0,0.15);
+}
+
+.hero-title {
+    font-size: 52px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.hero-subtitle {
+    font-size: 20px;
+    margin-top: 10px;
+    opacity: 0.92;
+}
+
+/* METRIC CARDS */
+
+.metric-card {
+    background: white;
+    padding: 28px;
+    border-radius: 22px;
+    text-align: center;
+    box-shadow: 0px 4px 18px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
+
+.metric-card:hover {
+    transform: translateY(-5px);
+}
+
+.metric-number {
+    font-size: 40px;
+    font-weight: bold;
+    color: #8B0000;
+}
+
+.metric-label {
+    color: #6c757d;
+    font-size: 17px;
+}
+
+/* SECTION TITLES */
+
+.section-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-top: 20px;
+    margin-bottom: 18px;
+    color: #111827;
+}
+
+/* SEARCH BOX */
+
+.search-box {
+    background: white;
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 0px 4px 18px rgba(0,0,0,0.08);
+}
+
+/* SUCCESS CARD */
+
+.success-card {
+    background: linear-gradient(
+        135deg,
+        #ecfff3,
+        #d4f8e8
+    );
+
+    padding: 25px;
+    border-radius: 22px;
+    margin-bottom: 18px;
+
+    border-left: 8px solid #00a86b;
+
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.05);
+}
+
+/* ALERT CARD */
+
+.alert-card {
+    background: linear-gradient(
+        135deg,
+        #fff0f0,
+        #ffdada
+    );
+
+    padding: 25px;
+    border-radius: 22px;
+    margin-bottom: 18px;
+
+    border-left: 8px solid #ff0000;
+
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.05);
+}
+
+/* AI CARD */
+
+.ai-card {
+    background: linear-gradient(
+        135deg,
+        #141E30,
+        #243B55
+    );
+
+    color: white;
+
+    padding: 32px;
+
+    border-radius: 25px;
+
+    margin-bottom: 22px;
+
+    box-shadow: 0px 6px 18px rgba(0,0,0,0.15);
+}
+
+/* DEMAND BADGE */
+
+.badge-high {
+    background: #ff4d4d;
+    padding: 8px 18px;
+    border-radius: 30px;
+    color: white;
+    font-weight: bold;
+}
+
+.badge-medium {
+    background: #ffb703;
+    padding: 8px 18px;
+    border-radius: 30px;
+    color: black;
+    font-weight: bold;
+}
+
+.badge-low {
+    background: #2ecc71;
+    padding: 8px 18px;
+    border-radius: 30px;
+    color: white;
+    font-weight: bold;
+}
+
+/* FOOTER */
+
+.footer {
+    text-align: center;
+    margin-top: 40px;
+    color: gray;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+# -------------------------------------------------------
+# LOAD DATA
+# -------------------------------------------------------
+
+df = pd.read_csv("dataset/blood_inventory.csv")
+
+# -------------------------------------------------------
+# HERO SECTION
+# -------------------------------------------------------
+
+st.markdown("""
+<div class="hero">
+
+<div class="hero-title">
+🩸 HemoAI
+</div>
+
+<div class="hero-subtitle">
+Next-Generation AI Platform for Blood Emergency Response,
+Smart Allocation & Predictive Healthcare Intelligence
+</div>
+
+</div>
+""", unsafe_allow_html=True)
+
+# -------------------------------------------------------
+# TOP METRICS
+# -------------------------------------------------------
+
+hospital_count = len(
+    df[df['Type'] == 'Hospital']
+)
+
+blood_bank_count = len(
+    df[df['Type'] == 'Blood Bank']
+)
+
+critical_alerts = len(
+    df[df['Units_Available'] < 10]
+)
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.markdown(f"""
+    <div class="metric-card">
+
+    <div class="metric-number">
+    {hospital_count}
+    </div>
+
+    <div class="metric-label">
+    Connected Hospitals
+    </div>
+
+    </div>
+    """, unsafe_allow_html=True)
+
+with col2:
+    st.markdown(f"""
+    <div class="metric-card">
+
+    <div class="metric-number">
+    {blood_bank_count}
+    </div>
+
+    <div class="metric-label">
+    Active Blood Banks
+    </div>
+
+    </div>
+    """, unsafe_allow_html=True)
+
+with col3:
+    st.markdown(f"""
+    <div class="metric-card">
+
+    <div class="metric-number">
+    {critical_alerts}
+    </div>
+
+    <div class="metric-label">
+    Critical Shortage Alerts
+    </div>
+
+    </div>
+    """, unsafe_allow_html=True)
+
+# -------------------------------------------------------
+# EMERGENCY REQUEST
+# -------------------------------------------------------
+
+st.markdown("""
+<div class="section-title">
+🚑 Emergency Blood Request
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<div class="search-box">
+""", unsafe_allow_html=True)
+
+col1, col2 = st.columns(2)
+
+with col1:
+    city = st.selectbox(
+        "Select Area / City",
+        sorted(df['City'].unique())
+    )
+
+with col2:
+    blood_group = st.selectbox(
+        "Select Blood Group",
+        sorted(df['Blood_Group'].unique())
+    )
+
+priority = st.selectbox(
+    "Emergency Priority",
+    [
+        "Normal",
+        "Medium",
+        "High",
+        "Critical"
+    ]
+)
+
+search = st.button("🔍 Find Smart Blood Sources")
+
+st.markdown("</div>", unsafe_allow_html=True)
+
+# -------------------------------------------------------
+# SMART SEARCH RESULTS
+# -------------------------------------------------------
+
+if search:
+
+    available = df[
+        (df['City'] == city) &
+        (df['Blood_Group'] == blood_group) &
+        (df['Units_Available'] > 5)
+    ]
+
+    st.markdown("""
+    <div class="section-title">
+    📍 AI Recommended Blood Sources
+    </div>
+    """, unsafe_allow_html=True)
+
+    if len(available) > 0:
+
+        available = available.sort_values(
+            by='Units_Available',
+            ascending=False
+        )
+
+        for index, row in available.head(5).iterrows():
+
+            st.markdown(f"""
+            <div class="success-card">
+
+            <h2>🏥 {row['Name']}</h2>
+
+            📍 <b>Location:</b> {row['City']} <br><br>
+
+            🩸 <b>Blood Group:</b> {row['Blood_Group']} <br><br>
+
+            ✅ <b>Available Units:</b>
+            {row['Units_Available']} <br><br>
+
+            🤖 AI Recommendation:
+            Best suitable source based on
+            availability and emergency demand.
+
+            </div>
+            """, unsafe_allow_html=True)
+
+    else:
+
+        st.markdown("""
+        <div class="alert-card">
+
+        ❌ No matching blood source available nearby.
+
+        </div>
+        """, unsafe_allow_html=True)
+
+# -------------------------------------------------------
+# CRITICAL ALERTS
+# -------------------------------------------------------
+
+st.markdown("""
+<div class="section-title">
+⚠ Critical Emergency Alerts
+</div>
+""", unsafe_allow_html=True)
+
+critical = df[
+    (df['Units_Available'] < 10)
+]
+
+for index, row in critical.head(6).iterrows():
+
+    if row['Units_Available'] <= 3:
+        severity = "EXTREME RISK"
+    elif row['Units_Available'] <= 6:
+        severity = "HIGH RISK"
+    else:
+        severity = "MODERATE RISK"
+
+    st.markdown(f"""
+    <div class="alert-card">
+
+    🚨 <b>{severity}</b> <br><br>
+
+    🏥 {row['Name']} <br><br>
+
+    📍 {row['City']} <br><br>
+
+    🩸 Blood Group:
+    <b>{row['Blood_Group']}</b> <br><br>
+
+    Remaining Units:
+    <b>{row['Units_Available']}</b> <br><br>
+
+    ⚡ Immediate redistribution recommended.
+
+    </div>
+    """, unsafe_allow_html=True)
+
+# -------------------------------------------------------
+# AI DEMAND PREDICTION
+# -------------------------------------------------------
+
+st.markdown("""
+<div class="section-title">
+🤖 AI Regional Demand Intelligence
+</div>
+""", unsafe_allow_html=True)
+
+X = df[
+    [
+        'Emergency_Requests',
+        'Daily_Usage'
+    ]
+]
+
+y = df['Units_Available']
+
+model = LinearRegression()
+
+model.fit(X, y)
+
+city_data = df.groupby(
+    ['City', 'Blood_Group']
+).agg({
+    'Emergency_Requests':'sum',
+    'Daily_Usage':'sum'
+}).reset_index()
+
+predictions = []
+
+for index, row in city_data.iterrows():
+
+    pred = model.predict([[
+        row['Emergency_Requests'],
+        row['Daily_Usage']
+    ]])[0]
+
+    predictions.append(pred)
+
+city_data['Predicted_Demand'] = predictions
+
+city_data = city_data.sort_values(
+    by='Predicted_Demand',
+    ascending=False
+)
+
+for index, row in city_data.head(8).iterrows():
+
+    if row['Predicted_Demand'] > 80:
+        badge = "badge-high"
+        level = "CRITICAL DEMAND"
+
+    elif row['Predicted_Demand'] > 45:
+        badge = "badge-medium"
+        level = "HIGH DEMAND"
+
+    else:
+        badge = "badge-low"
+        level = "MODERATE DEMAND"
+
+    st.markdown(f"""
+    <div class="ai-card">
+
+    <h2>📍 {row['City']}</h2>
+
+    🩸 Blood Group:
+    <h3>{row['Blood_Group']}</h3>
+
+    <span class="{badge}">
+    {level}
+    </span>
+
+    <br><br>
+
+    📈 Predicted Required Units:
+    <h1>{row['Predicted_Demand']:.2f}</h1>
+
+    🧠 AI Analysis:
+    This region is expected to require
+    additional <b>{row['Blood_Group']}</b>
+    blood units due to increasing emergency
+    requests and daily consumption trends.
+
+    </div>
+    """, unsafe_allow_html=True)
+
+# -------------------------------------------------------
+# FOOTER
+# -------------------------------------------------------
+
+st.markdown("""
+<div class="footer">
+
+HemoAI • Smart Blood Supply Chain &
+Emergency Intelligence Platform
+
+</div>
+""", unsafe_allow_html=True)
