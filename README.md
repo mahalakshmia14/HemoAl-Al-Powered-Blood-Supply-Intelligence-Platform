@@ -44,19 +44,17 @@ Blood inventory is time-sensitive and varies by location and blood group. A simp
 | CSV | Prototype inventory dataset |
 
 
-## 📸 Screenshots
-
 ### 🏠 Dashboard
-![HemoAI Dashboard](screenshots/dashboard.png)
+![HemoAI Dashboard](screenshots/Dashboard.png)
 
 ### 🔎 Inventory Search
-![Inventory Search](screenshots/search.png)
+![Inventory Search](screenshots/Search.png)
 
 ### 📊 Demand Analytics
-![Demand Analytics](screenshots/analytics.png)
+![Demand Analytics](screenshots/Analytics.png)
 
 ### 🚨 Emergency Alerts
-![Emergency Alerts](screenshots/emergency.png)
+![Emergency Alerts](screenshots/Emergency.png)
 
 
 
