@@ -43,7 +43,6 @@ Blood inventory is time-sensitive and varies by location and blood group. A simp
 | Joblib | Saving and loading the trained model |
 | CSV | Prototype inventory dataset |
 
-## 🖥️ Screenshots
 
 ## 🖥️ Screenshots
 
