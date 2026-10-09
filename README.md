@@ -44,25 +44,21 @@ Blood inventory is time-sensitive and varies by location and blood group. A simp
 | CSV | Prototype inventory dataset |
 
 
-## 🖥️ Screenshots
+## 📸 Screenshots
 
-Add screenshots captured from your actual running application to the `screenshots/` folder. Do not use mockups as evidence of implemented features.
+### 🏠 Dashboard
+![HemoAI Dashboard](screenshots/dashboard.png)
 
-Once the images exist, update the filenames below if needed:
+### 🔎 Inventory Search
+![Inventory Search](screenshots/search.png)
 
-| Dashboard | Inventory search |
-|---|---|
-| `screenshots/dashboard.png` | `screenshots/search.png` |
+### 📊 Demand Analytics
+![Demand Analytics](screenshots/analytics.png)
 
-| Demand analytics | Low-stock alerts |
-|---|---|
-| `screenshots/analytics.png` | `screenshots/emergency.png` |
-<!-- After adding the image files, uncomment these lines:
-![HemoAI dashboard](screenshots/Dashboard.png)
-![Inventory search](screenshots/Search.png)
-![Demand analytics](screenshots/Analytics.png)
-![Low-stock alerts](screenshots/Emergency.png)
--->
+### 🚨 Emergency Alerts
+![Emergency Alerts](screenshots/emergency.png)
+
+
 
 ## 🏗️ How It Works
 
