@@ -45,7 +45,9 @@ Blood inventory is time-sensitive and varies by location and blood group. A simp
 
 ## 🖥️ Screenshots
 
-Add screenshots captured from your **actual running application** to the `screenshots/` folder. Do not use mockups as evidence of implemented features.
+## 🖥️ Screenshots
+
+Add screenshots captured from your actual running application to the `screenshots/` folder. Do not use mockups as evidence of implemented features.
 
 Once the images exist, update the filenames below if needed:
 
@@ -56,7 +58,6 @@ Once the images exist, update the filenames below if needed:
 | Demand analytics | Low-stock alerts |
 |---|---|
 | `screenshots/analytics.png` | `screenshots/emergency.png` |
-
 <!-- After adding the image files, uncomment these lines:
 ![HemoAI dashboard](screenshots/Dashboard.png)
 ![Inventory search](screenshots/Search.png)
